@@ -116,7 +116,7 @@ const scholarships = [
   {
     name: "Prime Minister's Scholarship Scheme for Central Armed Police Forces and Assam Rifles",
     description: "Scholarship for wards/widows of deceased/ex-CAPF and AR personnel to pursue professional and technical courses.",
-    amount: "₹3,000 per month (Boys), ₹3,500 per month (Girls)",
+    amount: "Up to ₹3,500 per month (amount varies by category)",
     deadline: new Date('2025-08-31'),
     link: "https://scholarships.gov.in/",
     eligibility: {

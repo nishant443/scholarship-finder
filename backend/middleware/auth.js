@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -19,15 +18,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-const adminMiddleware = async (req, res, next) => {
-  try {
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Access denied. Admin only.' });
-    }
-    next();
-  } catch (error) {
-    res.status(403).json({ message: 'Access denied' });
-  }
-};
-
-module.exports = { authMiddleware, adminMiddleware };
+module.exports = { authMiddleware };

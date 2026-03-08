@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
+    enum: ['user'],
     default: 'user'
   },
   
@@ -44,7 +44,8 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
       type: String,
-      enum: ['Male', 'Female', 'Other', '']
+      enum: ['Female'],
+      default: 'Female'
     }
   },
   

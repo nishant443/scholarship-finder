@@ -3,18 +3,23 @@ import { useAuth } from '../context/AuthContext';
 
 function Profile() {
     const { user, updateProfile } = useAuth();
+    const [showToast, setShowToast] = useState(false);
     const [formData, setFormData] = useState({
         education: '',
         field: '',
         state: '',
         category: '',
         income: '',
-        gender: ''
+        gender: 'Female'
     });
 
     useEffect(() => {
         if (user?.profile) {
-            setFormData(user.profile);
+            setFormData(prev => ({
+                ...prev,
+                ...user.profile,
+                gender: 'Female'
+            }));
         }
     }, [user]);
 
@@ -22,12 +27,22 @@ function Profile() {
         e.preventDefault();
         const result = await updateProfile(formData);
         if (result.success) {
-            alert('Profile updated!');
+            setShowToast(true);
+            setTimeout(() => {
+                setShowToast(false);
+            }, 3000);
         }
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto px-4 py-8 relative">
+            {showToast && (
+                <div className="fixed top-4 inset-x-0 flex justify-center z-50">
+                    <div className="toast-slide-down bg-green-600 text-white px-4 py-2 rounded-full shadow-lg">
+                        Profile updated successfully
+                    </div>
+                </div>
+            )}
             <h1 className="text-3xl font-bold mb-8">Your Profile</h1>
             <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow space-y-4">
                 <div>
@@ -65,12 +80,15 @@ function Profile() {
                 </div>
                 <div>
                     <label className="label">Gender</label>
-                    <select value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} className="input-field">
-                        <option value="">Select...</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <input
+                        type="text"
+                        value="Female"
+                        disabled
+                        className="input-field bg-gray-100 cursor-not-allowed"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                        This platform is exclusively for girls/women, so gender is fixed as Female.
+                    </p>
                 </div>
                 <button type="submit" className="w-full btn-primary">Save Profile</button>
             </form>

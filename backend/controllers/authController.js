@@ -25,7 +25,10 @@ exports.register = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      profile: {
+        gender: 'Female'
+      }
     });
     
     const token = jwt.sign(
@@ -104,7 +107,7 @@ exports.getMe = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { education, field, state, category, income, gender } = req.body;
+    const { education, field, state, category, income } = req.body;
     
     const user = await User.findByIdAndUpdate(
       req.user.id,
@@ -115,7 +118,7 @@ exports.updateProfile = async (req, res) => {
           state, 
           category, 
           income: income ? Number(income) : null, 
-          gender 
+          gender: 'Female'
         } 
       },
       { new: true, runValidators: true }

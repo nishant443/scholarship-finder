@@ -22,7 +22,6 @@ A full-stack MERN application that helps girls find scholarships tailored to the
 - **Scholarship Browser**: Filter and search through 500+ scholarships
 - **Application Tracker**: Save, track, and manage scholarship applications
 - **Deadline Alerts**: Visual indicators for urgent deadlines
-- **Admin Panel**: Add, edit, and delete scholarships (admin only)
 
 ### Unique Selling Points
 - **Match Score Algorithm**: 0-100% compatibility score for each scholarship
@@ -92,7 +91,6 @@ scholarship-finder/
     │   │   ├── ScholarshipList.jsx
     │   │   ├── ScholarshipDetail.jsx
     │   │   ├── Profile.jsx
-    │   │   └── AdminPanel.jsx
     │   ├── context/
     │   │   └── AuthContext.jsx    # Global auth state
     │   ├── utils/
@@ -183,18 +181,6 @@ npm run seed
 ```
 This adds 20 sample scholarships to your database.
 
-### Default Admin Account
-
-To create an admin user, register normally then manually update in MongoDB:
-```javascript
-db.users.updateOne(
-  { email: "admin@example.com" },
-  { $set: { role: "admin" } }
-)
-```
-
----
-
 ## 📡 API Endpoints
 
 ### Authentication
@@ -207,9 +193,6 @@ db.users.updateOne(
 - `GET /api/scholarships` - Get all scholarships (with filters)
 - `GET /api/scholarships/matched/me` - Get matched scholarships (Protected)
 - `GET /api/scholarships/:id` - Get single scholarship
-- `POST /api/scholarships` - Create scholarship (Admin only)
-- `PUT /api/scholarships/:id` - Update scholarship (Admin only)
-- `DELETE /api/scholarships/:id` - Delete scholarship (Admin only)
 - `GET /api/scholarships/stats` - Get statistics
 
 ### Applications
@@ -231,37 +214,31 @@ Located in `backend/utils/matchScore.js`, this is the core innovation:
 function calculateMatchScore(userProfile, eligibility) {
   let score = 0;
   
-  // Education match (25 points)
   if (eligibility.education.includes(userProfile.education)) {
     score += 25;
   }
   
-  // Field match (25 points)
   if (eligibility.field.includes(userProfile.field) || eligibility.field.includes('Any')) {
     score += 25;
   }
   
-  // State match (20 points)
   if (eligibility.state.includes(userProfile.state) || eligibility.state.includes('All India')) {
     score += 20;
   }
   
-  // Category match (15 points)
   if (eligibility.category.includes(userProfile.category)) {
     score += 15;
   }
   
-  // Gender match (10 points)
   if (eligibility.gender.includes(userProfile.gender)) {
     score += 10;
   }
   
-  // Income eligibility (5 points)
   if (userProfile.income <= eligibility.maxIncome) {
     score += 5;
   }
   
-  return score; // 0-100%
+  return score; 
 }
 ```
 
@@ -283,7 +260,7 @@ function calculateMatchScore(userProfile, eligibility) {
   name: String,
   email: String (unique),
   password: String (hashed),
-  role: "user" | "admin",
+  role: "user",
   profile: {
     education: String,
     field: String,
@@ -335,10 +312,9 @@ function calculateMatchScore(userProfile, eligibility) {
 2. **Complete MERN Stack** - Full-stack implementation
 3. **JWT Authentication** - Secure token-based auth
 4. **Protected Routes** - Frontend and backend route protection
-5. **Role-Based Access** - Admin vs User permissions
-6. **Responsive UI** - Tailwind CSS responsive design
-7. **Real-world Problem** - Solves actual scholarship discovery issue
-8. **Scalable Architecture** - Clean separation of concerns
+5. **Responsive UI** - Tailwind CSS responsive design
+6. **Real-world Problem** - Solves actual scholarship discovery issue
+7. **Scalable Architecture** - Clean separation of concerns
 
 ---
 
@@ -377,7 +353,7 @@ MIT License - Women's Day Project 2025
 
 ---
 
-## 👨‍💻 Author
+## 👩‍💻 Author
 Created for Full Stack Development Challenge - Women's Day Special
 
 ---

@@ -10,7 +10,6 @@ import Dashboard from './pages/Dashboard';
 import ScholarshipList from './pages/ScholarshipList';
 import ScholarshipDetail from './pages/ScholarshipDetail';
 import Profile from './pages/Profile';
-import AdminPanel from './pages/AdminPanel';
 
 function App() {
   return (
@@ -43,14 +42,6 @@ function App() {
               } 
             />
             
-            <Route 
-              path="/admin" 
-              element={
-                <ProtectedRoute adminOnly>
-                  <AdminPanel />
-                </ProtectedRoute>
-              } 
-            />
           </Routes>
         </div>
       </BrowserRouter>
