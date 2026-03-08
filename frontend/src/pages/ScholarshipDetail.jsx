@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../utils/api';
 
 function ScholarshipDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { isAuthenticated } = useAuth();
     const [scholarship, setScholarship] = useState(null);
     const [saved, setSaved] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     useEffect(() => {
         fetchScholarship();
@@ -26,16 +29,33 @@ function ScholarshipDetail() {
         try {
             await api.post('/applications/save', { scholarshipId: id });
             setSaved(true);
-            alert('Scholarship saved!');
+            setToastMessage('Scholarship saved successfully');
+            setShowToast(true);
+            setTimeout(() => {
+                setShowToast(false);
+                navigate('/dashboard');
+            }, 1500);
         } catch (error) {
-            alert(error.response?.data?.message || 'Failed to save');
+            const message = error.response?.data?.message || 'Failed to save scholarship';
+            setToastMessage(message);
+            setShowToast(true);
+            setTimeout(() => {
+                setShowToast(false);
+            }, 3000);
         }
     };
 
     if (!scholarship) return <div className="text-center py-20">Loading...</div>;
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto px-4 py-8 relative">
+            {showToast && (
+                <div className="fixed top-4 inset-x-0 flex justify-center z-50">
+                    <div className="toast-slide-down bg-green-600 text-white px-4 py-2 rounded-full shadow-lg">
+                        {toastMessage}
+                    </div>
+                </div>
+            )}
             <div className="bg-white rounded-lg shadow-lg p-8">
                 <h1 className="text-3xl font-bold mb-4">{scholarship.name}</h1>
                 <div className="prose max-w-none mb-6">

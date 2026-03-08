@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   profile: {
     education: {
       type: String,
-      enum: ['10th', '12th', 'UG', 'PG', 'PhD', '']
+      enum: ['6th', '7th', '8th', '9th', '10th', '11th', '12th', 'UG', 'PG', 'PhD', '']
     },
     field: {
       type: String

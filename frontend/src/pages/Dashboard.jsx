@@ -9,6 +9,7 @@ function Dashboard() {
   const [matchedScholarships, setMatchedScholarships] = useState([]);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [eligibleScholarshipIds, setEligibleScholarshipIds] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -20,7 +21,9 @@ function Dashboard() {
         api.get('/scholarships/matched/me'),
         api.get('/applications')
       ]);
-      setMatchedScholarships(matchedRes.data.scholarships.slice(0, 6));
+      const allMatched = matchedRes.data.scholarships || [];
+      setMatchedScholarships(allMatched.slice(0, 6));
+      setEligibleScholarshipIds(allMatched.map(s => s._id));
       setApplications(appsRes.data.applications);
     } catch (error) {
       console.error(error);
@@ -68,13 +71,25 @@ function Dashboard() {
                     Deadline: {new Date(app.scholarship.deadline).toLocaleDateString()}
                   </p>
                 </div>
-                <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  app.status === 'applied' ? 'bg-emerald-100 text-emerald-700' :
-                  app.status === 'saved' ? 'bg-rose-100 text-rose-700' :
-                  'bg-gray-100 text-gray-700'
-                }`}>
-                  {app.status}
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    app.status === 'applied' ? 'bg-emerald-100 text-emerald-700' :
+                    app.status === 'saved' ? 'bg-rose-100 text-rose-700' :
+                    'bg-gray-100 text-gray-700'
+                  }`}>
+                    {app.status}
+                  </span>
+                  {eligibleScholarshipIds.includes(app.scholarship._id) && app.scholarship.link && (
+                    <a
+                      href={app.scholarship.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1 rounded-full text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                    >
+                      Apply
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>
