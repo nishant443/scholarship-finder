@@ -60,17 +60,17 @@ function ScholarshipCard({ scholarship, showMatchScore = false }) {
 
         <div className="flex flex-wrap gap-2 mb-4">
           {scholarship.eligibility?.education?.slice(0, 2).map((edu, idx) => (
-            <span key={idx} className="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-full">
+            <span key={idx} className="bg-rose-100 text-rose-700 text-xs px-2 py-1 rounded-full">
               {edu}
             </span>
           ))}
           {scholarship.eligibility?.field?.slice(0, 1).map((field, idx) => (
-            <span key={idx} className="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded-full">
+            <span key={idx} className="bg-fuchsia-100 text-fuchsia-700 text-xs px-2 py-1 rounded-full">
               {field}
             </span>
           ))}
           {scholarship.eligibility?.gender?.includes('Female') && (
-            <span className="bg-pink-100 text-pink-700 text-xs px-2 py-1 rounded-full">
+            <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">
               For Girls
             </span>
           )}
@@ -78,7 +78,7 @@ function ScholarshipCard({ scholarship, showMatchScore = false }) {
 
         <Link
           to={`/scholarships/${scholarship._id}`}
-          className="block w-full text-center bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 transition"
+          className="block w-full text-center bg-rose-600 text-white py-2 rounded-lg font-medium hover:bg-rose-700 transition"
         >
           View Details →
         </Link>

@@ -15,7 +15,7 @@ body {
 }
 
 .btn-primary {
-  @apply bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition duration-200;
+  @apply bg-rose-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-rose-700 transition duration-200;
 }
 
 .btn-secondary {
@@ -23,7 +23,7 @@ body {
 }
 
 .input-field {
-  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none;
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none;
 }
 
 .label {

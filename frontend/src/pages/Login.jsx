@@ -54,7 +54,7 @@ function Login() {
         </form>
         <p className="text-center mt-4 text-gray-600">
           Don't have an account?{' '}
-          <Link to="/register" className="text-indigo-600 font-medium hover:underline">
+          <Link to="/register" className="text-rose-600 font-medium hover:underline">
             Register
           </Link>
         </p>
